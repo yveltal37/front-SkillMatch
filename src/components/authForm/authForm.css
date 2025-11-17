@@ -1,0 +1,18 @@
+form{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;  
+  width: 100%;
+}
+
+.MuiOutlinedInput-root {
+  background-color: #3f3f3f;
+  padding: 0.25rem;
+  margin-top: 0.25rem;
+}
+.MuiOutlinedInput-notchedOutline {
+  border-color: white !important; 
+}
+.MuiInputLabel-root {
+  color: #939393 !important; 
+}

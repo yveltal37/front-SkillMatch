@@ -1,0 +1,29 @@
+.authCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;  
+  background-color: #001f3f;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  padding: 2rem;
+  width: 20rem;
+  box-shadow: 0 0 20px #ffffff33;
+  color: #fff;
+}
+
+.authCard input,
+.authCard button {
+  box-sizing: border-box;
+}
+
+.toggleModeButton span {
+    text-transform: none ;
+}
+.toggleModeButton:hover span {
+    text-decoration: underline;
+}
+.toggleModeButton {
+  outline: none !important; 
+  margin: 1rem 0 0 0 !important;
+}
