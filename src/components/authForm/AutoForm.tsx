@@ -1,21 +1,32 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { TextField, Button } from "@mui/material";
 import "./authForm.css"
 import { signup, login, getCategories } from "../../services/auth-api";
+import { UserContext } from "../../context/UserContext";
 
 function AuthForm({ isLogin }: { isLogin: boolean }) {
+  const { setUser } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isLogin) {
-      console.log("Logging in:", { username, password });
+      try{
+        const res = await login({ username, password });
+        console.log("Logged in:", res.user);
+        sessionStorage.setItem("accessToken", res.tokens.accessToken);
+        sessionStorage.setItem("refreshToken", res.tokens.refreshToken);
+        setUser(res.user);
+      } catch(err){
+        console.log(err);
+      }
     } else {
       try {
         const res = await signup({ username, password, categoryIds: [1, 2, 3]});
-        sessionStorage.setItem("accessToken", res.accessToken);
-        sessionStorage.setItem("refreshToken", res.refreshToken);
+        sessionStorage.setItem("accessToken", res.tokens.accessToken);
+        sessionStorage.setItem("refreshToken", res.tokens.refreshToken);
+        setUser(res.user);
       } catch (err) {
         console.error(err);
       }

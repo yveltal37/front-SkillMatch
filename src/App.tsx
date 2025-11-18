@@ -5,7 +5,7 @@ function App() {
 
   return (
     <>
-      <Auth></Auth>
+      <Auth/>
     </>
   )
 }

@@ -25,7 +25,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const token = sessionStorage.getItem("accessToken");
-
     if (token) {
       try {
         const decoded = jwtDecode<{
@@ -33,7 +32,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
           username: string;
           isAdmin: boolean;
         }>(token);
-        
         setUser({
           username: decoded.username,
           isAdmin: decoded.isAdmin,
@@ -43,7 +41,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
         setUser(null);
       }
     }
-
     setLoading(false);
   }, []);
 
