@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { getCategories } from "../../services/auth-api";
-import { Grid, Card, CardActionArea, Typography } from "@mui/material";
-
+import { Grid, Typography } from "@mui/material";
+import CategoryCard from "../catagoryCard/CategoryCard";
+import "./categorySelector.css"
 interface Category {
   id: number;
   name: string;
@@ -40,33 +41,20 @@ export default function CategorySelector({ selected, setSelected }: Props) {
       <Typography variant="h6" sx={{ mb: 2 }}>
         Choose 3 to 5 favorite categories
       </Typography>
-
-      <Grid container spacing={2}>
-        {categories.map((cat) => {
-          const isSelected = selected.includes(cat.id);
-
-          return (
-            <Grid key={cat.id} sx={{ width: { xs: "100%", sm: "48%", md: "23%" } }}>
-              <Card
-                sx={{
-                  border: isSelected ? "2px solid #1976d2" : "1px solid #ccc",
-                  boxShadow: isSelected ? 4 : 1,
-                  transition: "0.2s",
-                  mb: 2,
-                }}
-              >
-                <CardActionArea onClick={() => toggleCategory(cat.id)}>
-                  <div style={{ padding: "20px", textAlign: "center" }}>
-                    <Typography variant="body1">{cat.name}</Typography>
-                  </div>
-                </CardActionArea>
-              </Card>
+      <div className="grid-container">
+        <Grid container spacing={1}>
+          {categories.map((cat) => (
+            <Grid key={cat.id} sx={{ width: { xs: "100%", sm: "47%" } }}>
+              <CategoryCard
+                name={cat.name}
+                isSelected={selected.includes(cat.id)}
+                onClick={() => toggleCategory(cat.id)}
+              />
             </Grid>
-          );
-        })}
-      </Grid>
-
-      <Typography> Selected: {selected.length} / 5 </Typography>
+          ))}
+        </Grid>
+        </div>
+      <p> Selected: {selected.length} / 5 </p>
     </div>
   );
 }

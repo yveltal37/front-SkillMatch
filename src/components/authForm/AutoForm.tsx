@@ -4,6 +4,7 @@ import "./authForm.css"
 import { signup, login } from "../../services/auth-api";
 import { UserContext } from "../../context/UserContext";
 import CategorySelector from "../categorySelector/CategorySelector";
+import { useNavigate } from "react-router-dom";
 
 function AuthForm({ isLogin }: { isLogin: boolean }) {
   const { setUser } = useContext(UserContext);
@@ -14,40 +15,53 @@ function AuthForm({ isLogin }: { isLogin: boolean }) {
   const [isNexted, setIsNexted] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
 
+  const navigate = useNavigate();
+
+  const handleLogin = async () =>{
+    try{
+      const res = await login({ username, password });
+      console.log("Logged in:", res.user);
+      sessionStorage.setItem("accessToken", res.tokens.accessToken);
+      sessionStorage.setItem("refreshToken", res.tokens.refreshToken);
+      setUser(res.user);
+      if(res.user.isAdmin){
+        navigate("/admin");
+      }
+    } catch(err){
+      console.log(err);
+    }
+  }
+
+  const handleSignup = async () =>{
+    if (!isNexted) {
+      setIsNexted(true);
+      return;
+    }
+
+    if (selectedCategories.length < 3 || selectedCategories.length > 5) {
+      alert("Select between 3 to 5 categories");
+      return;
+    }
+    try {
+      const res = await signup({
+        username,
+        password,
+        categoryIds: selectedCategories
+      });
+
+      sessionStorage.setItem("accessToken", res.tokens.accessToken);
+      sessionStorage.setItem("refreshToken", res.tokens.refreshToken);
+      setUser(res.user);
+    } catch (err) {
+      console.log("Signup error:", err);
+    }
+  }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isLogin) {
-      try{
-        const res = await login({ username, password });
-        console.log("Logged in:", res.user);
-        sessionStorage.setItem("accessToken", res.tokens.accessToken);
-        sessionStorage.setItem("refreshToken", res.tokens.refreshToken);
-        setUser(res.user);
-      } catch(err){
-        console.log(err);
-      }
+      await handleLogin();
     } else {
-      if (!isNexted) {
-        setIsNexted(true);
-        return;
-      }
-
-      if (selectedCategories.length < 3 || selectedCategories.length > 5) {
-        alert("Select between 3 to 5 categories");
-        return;
-      }
-      try {
-        const res = await signup({
-          username,
-          password,
-          categoryIds: selectedCategories
-        });
-        sessionStorage.setItem("accessToken", res.tokens.accessToken);
-        sessionStorage.setItem("refreshToken", res.tokens.refreshToken);
-        setUser(res.user);
-      } catch (err) {
-        console.log("Signup error:", err);
-      }
+      await handleSignup();
     }
   }
 

@@ -19,6 +19,7 @@ interface AuthResponse {
 }
 
 export const signup = async (data: { username: string; password: string; categoryIds: number[] }): Promise<AuthResponse> => {
+  console.log(data);
   return (await axios.post<AuthResponse>(`${API_URL}/signup`, data)).data;
 };
 

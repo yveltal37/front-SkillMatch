@@ -1,12 +1,13 @@
 import './App.css'
-import Auth from './pages/auth/Auth'
+import AppRoutes from './router/AppRoutes'
+import { UserProvider } from './context/UserContext.tsx'
 
 function App() {
 
   return (
-    <>
-      <Auth/>
-    </>
+    <UserProvider>
+      <AppRoutes />
+    </UserProvider>
   )
 }
 
