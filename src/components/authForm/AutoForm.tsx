@@ -1,13 +1,18 @@
 import { useState, useContext } from "react";
 import { TextField, Button } from "@mui/material";
 import "./authForm.css"
-import { signup, login, getCategories } from "../../services/auth-api";
+import { signup, login } from "../../services/auth-api";
 import { UserContext } from "../../context/UserContext";
+import CategorySelector from "../categorySelector/CategorySelector";
 
 function AuthForm({ isLogin }: { isLogin: boolean }) {
   const { setUser } = useContext(UserContext);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const [isNexted, setIsNexted] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,28 +27,47 @@ function AuthForm({ isLogin }: { isLogin: boolean }) {
         console.log(err);
       }
     } else {
+      if (!isNexted) {
+        setIsNexted(true);
+        return;
+      }
+
+      if (selectedCategories.length < 3 || selectedCategories.length > 5) {
+        alert("Select between 3 to 5 categories");
+        return;
+      }
       try {
-        const res = await signup({ username, password, categoryIds: [1, 2, 3]});
+        const res = await signup({
+          username,
+          password,
+          categoryIds: selectedCategories
+        });
         sessionStorage.setItem("accessToken", res.tokens.accessToken);
         sessionStorage.setItem("refreshToken", res.tokens.refreshToken);
         setUser(res.user);
       } catch (err) {
-        console.error(err);
+        console.log("Signup error:", err);
       }
     }
   }
 
   return (
-        <form onSubmit={handleSubmit}>
-          <h1>{isLogin ? "Login" : "SignUp"}</h1>
-
+    <form onSubmit={handleSubmit}>
+      <h1>{isLogin ? "Login" : "SignUp"}</h1>
+      <div className="input-auth">
+        {!isLogin && isNexted ? (
+          <CategorySelector
+            selected={selectedCategories}
+            setSelected={setSelectedCategories}
+          />
+        ) : (
+        <>
           <TextField
             label="Username"
             fullWidth
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-
           <TextField
             label="Password"
             type="password"
@@ -51,10 +75,18 @@ function AuthForm({ isLogin }: { isLogin: boolean }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button variant="contained" type="submit">
-            {isLogin ? "Login" : "Next"}
-          </Button>
-        </form>
+        </>
+        )}
+      </div>
+      <Button variant="contained" type="submit">
+        {isLogin ?
+          "Login" : 
+          isNexted ?
+            "Signup":
+            "Next"
+        }
+      </Button>
+    </form>
   );
 }
 
