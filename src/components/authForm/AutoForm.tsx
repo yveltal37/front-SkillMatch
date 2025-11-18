@@ -90,4 +90,4 @@ function AuthForm({ isLogin }: { isLogin: boolean }) {
   );
 }
 
-export default AuthForm
+export default AuthForm;

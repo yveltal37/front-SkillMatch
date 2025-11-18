@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCategories } from "../../services/auth-api";
-import { Grid, Card, CardActionArea, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
+import CategoryCard from "../catagoryCard/CategoryCard";
 
 interface Category {
   id: number;
@@ -11,7 +12,7 @@ interface Props {
   setSelected: (ids: number[]) => void;
 }
 
-export default function CategorySelector({ selected, setSelected }: Props) {
+function CategorySelector({ selected, setSelected }: Props) {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
@@ -42,31 +43,20 @@ export default function CategorySelector({ selected, setSelected }: Props) {
       </Typography>
 
       <Grid container spacing={2}>
-        {categories.map((cat) => {
-          const isSelected = selected.includes(cat.id);
-
-          return (
-            <Grid key={cat.id} sx={{ width: { xs: "100%", sm: "48%", md: "23%" } }}>
-              <Card
-                sx={{
-                  border: isSelected ? "2px solid #1976d2" : "1px solid #ccc",
-                  boxShadow: isSelected ? 4 : 1,
-                  transition: "0.2s",
-                  mb: 2,
-                }}
-              >
-                <CardActionArea onClick={() => toggleCategory(cat.id)}>
-                  <div style={{ padding: "20px", textAlign: "center" }}>
-                    <Typography variant="body1">{cat.name}</Typography>
-                  </div>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          );
-        })}
+        {categories.map((cat) => (
+          <Grid key={cat.id} sx={{ width: { xs: "100%", sm: "48%", md: "23%" } }}>
+            <CategoryCard
+              name={cat.name}
+              isSelected={selected.includes(cat.id)}
+              onClick={() => toggleCategory(cat.id)}
+            />
+          </Grid>
+        ))}
       </Grid>
 
       <Typography> Selected: {selected.length} / 5 </Typography>
     </div>
   );
 }
+
+export default CategorySelector;
