@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import "./authForm.css"
+import { signup, login, getCategories } from "../../services/auth-api";
 
 function AuthForm({ isLogin }: { isLogin: boolean }) {
   const [username, setUsername] = useState("");
@@ -11,7 +12,13 @@ function AuthForm({ isLogin }: { isLogin: boolean }) {
     if (isLogin) {
       console.log("Logging in:", { username, password });
     } else {
-      console.log("Registering:", { username, password });
+      try {
+        const res = await signup({ username, password, categoryIds: [1, 2, 3]});
+        sessionStorage.setItem("accessToken", res.accessToken);
+        sessionStorage.setItem("refreshToken", res.refreshToken);
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
 
@@ -33,9 +40,8 @@ function AuthForm({ isLogin }: { isLogin: boolean }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
           <Button variant="contained" type="submit">
-            {isLogin ? "Next" : "Login"}
+            {isLogin ? "Login" : "Next"}
           </Button>
         </form>
   );
