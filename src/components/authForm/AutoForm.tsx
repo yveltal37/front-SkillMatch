@@ -14,40 +14,48 @@ function AuthForm({ isLogin }: { isLogin: boolean }) {
   const [isNexted, setIsNexted] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
 
+  const handleLogin = async () => {
+    try{
+      const res = await login({ username, password });
+      console.log("Logged in:", res.user);
+      sessionStorage.setItem("accessToken", res.tokens.accessToken);
+      sessionStorage.setItem("refreshToken", res.tokens.refreshToken);
+      setUser(res.user);
+    } catch(err){
+      console.log(err);
+    }
+  }
+
+  const handleSignup = async () => {
+    if (!isNexted) {
+      setIsNexted(true);
+      return;
+    }
+
+    if (selectedCategories.length < 3 || selectedCategories.length > 5) {
+      alert("Select between 3 to 5 categories");
+      return;
+    }
+    try {
+      const res = await signup({
+        username,
+        password,
+        categoryIds: selectedCategories
+      });
+      sessionStorage.setItem("accessToken", res.tokens.accessToken);
+      sessionStorage.setItem("refreshToken", res.tokens.refreshToken);
+      setUser(res.user);
+    } catch (err) {
+      console.log("Signup error:", err);
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isLogin) {
-      try{
-        const res = await login({ username, password });
-        console.log("Logged in:", res.user);
-        sessionStorage.setItem("accessToken", res.tokens.accessToken);
-        sessionStorage.setItem("refreshToken", res.tokens.refreshToken);
-        setUser(res.user);
-      } catch(err){
-        console.log(err);
-      }
+      await handleLogin();
     } else {
-      if (!isNexted) {
-        setIsNexted(true);
-        return;
-      }
-
-      if (selectedCategories.length < 3 || selectedCategories.length > 5) {
-        alert("Select between 3 to 5 categories");
-        return;
-      }
-      try {
-        const res = await signup({
-          username,
-          password,
-          categoryIds: selectedCategories
-        });
-        sessionStorage.setItem("accessToken", res.tokens.accessToken);
-        sessionStorage.setItem("refreshToken", res.tokens.refreshToken);
-        setUser(res.user);
-      } catch (err) {
-        console.log("Signup error:", err);
-      }
+      await handleSignup();
     }
   }
 
@@ -64,6 +72,7 @@ function AuthForm({ isLogin }: { isLogin: boolean }) {
         <>
           <TextField
             label="Username"
+            margin="normal"
             fullWidth
             value={username}
             onChange={(e) => setUsername(e.target.value)}
