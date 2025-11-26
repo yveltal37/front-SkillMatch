@@ -2,11 +2,13 @@ form{
   display: flex;
   flex-direction: column;
   gap: 0.5rem;  
+  margin: 1rem 0;
 }
 
 .MuiOutlinedInput-root {
   background-color: #3f3f3f;
   padding: 0.25rem;
+  color: #ffffff !important;
   margin-top: 0.25rem;
 }
 .MuiOutlinedInput-notchedOutline {

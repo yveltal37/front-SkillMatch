@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AuthForm from "../../components/authForm/AutoForm";
+import AuthForm from "../../components/authForm/AuthForm";
 import { Button } from "@mui/material";
 import './auth.css';
 
@@ -9,7 +9,7 @@ export default function Signup() {
   return(
       <div className="authCard">
         <AuthForm isLogin={isLogin} ></AuthForm>
-        <Button variant="outlined" onClick={() => setIsLogin(!isLogin)} className="toggleModeButton">
+        <Button variant="outlined" onClick={() => setIsLogin(!isLogin)} className="toggle-auth-btn">
         <span>
           {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Log In"}
         </span>

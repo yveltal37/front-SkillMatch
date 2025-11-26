@@ -16,13 +16,13 @@
   box-sizing: border-box;
 }
 
-.toggleModeButton span {
+.toggle-auth-btn span {
     text-transform: none ;
 }
-.toggleModeButton:hover span {
+.toggle-auth-btn:hover span {
     text-decoration: underline;
 }
-.toggleModeButton {
+.toggle-auth-btn {
   outline: none !important; 
   margin: 1rem 0 0 0 !important;
 }

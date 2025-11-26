@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
-import { getCategories } from "../../services/auth-api";
+import { getCategories } from "../../api/auth-api";
 import { Grid, Typography } from "@mui/material";
 import CategoryCard from "../catagoryCard/CategoryCard";
-import "./categorySelector.css"
+import "./categorySelector.css";
+
 interface Category {
   id: number;
   name: string;
 }
-interface Props {
+
+interface CategorySelectorProps {
   selected: number[];
   setSelected: (ids: number[]) => void;
 }
 
-export default function CategorySelector({ selected, setSelected }: Props) {
+function CategorySelector({ selected, setSelected }: CategorySelectorProps) {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    const fetchCats = async () => {
+    const fetchCategories = async () => {
       try {
         const data = await getCategories();
         setCategories(data);
@@ -24,12 +26,12 @@ export default function CategorySelector({ selected, setSelected }: Props) {
         console.log("Failed to fetch categories:", err);
       }
     };
-    fetchCats();
+    fetchCategories();
   }, []);
 
   const toggleCategory = (id: number) => {
     if (selected.includes(id)) {
-      setSelected(selected.filter(cid => cid !== id));
+      setSelected(selected.filter((cid) => cid !== id));
     } else {
       if (selected.length >= 5) return;
       setSelected([...selected, id]);
@@ -53,8 +55,10 @@ export default function CategorySelector({ selected, setSelected }: Props) {
             </Grid>
           ))}
         </Grid>
-        </div>
+      </div>
       <p> Selected: {selected.length} / 5 </p>
     </div>
   );
 }
+
+export default CategorySelector;

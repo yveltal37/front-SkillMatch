@@ -1,12 +1,12 @@
 import { Card, CardActionArea, Typography } from "@mui/material";
 import "./categoryCard.css"
-interface Props {
+interface CategoryCardProps {
   name: string;
   isSelected: boolean;
   onClick: () => void;
 }
 
-export default function CategoryCard({ name, isSelected, onClick }: Props) {
+export default function CategoryCard({ name, isSelected, onClick }: CategoryCardProps) {
   return (
     <Card
       sx={{
