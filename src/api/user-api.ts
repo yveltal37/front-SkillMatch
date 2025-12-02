@@ -2,7 +2,7 @@ import { api } from "./api-axios";
 
 const servicePrefix = "/user";
 
-export interface User {
+export interface UserDto {
   id: number;
   username: string;
 }
@@ -15,7 +15,7 @@ export interface UserStatisticsDto {
 export const getAllUsers = async () => {
   const accessToken = sessionStorage.getItem("accessToken");
   return (
-    await api.get<User[]>(`${servicePrefix}`, {
+    await api.get<UserDto[]>(`${servicePrefix}`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
   ).data;

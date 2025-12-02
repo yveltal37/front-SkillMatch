@@ -1,5 +1,5 @@
-import { useState } from "react";
-import {
+import { useState, useEffect } from "react";
+/*import {
   Typography,
   Button,
   Dialog,
@@ -7,12 +7,22 @@ import {
   DialogContent,
   TextField,
   DialogActions,
-} from "@mui/material";
+} from "@mui/material";*/
 import { createCategoty } from "../../api/category-api";
-
-
+import type { UserStatisticsDto } from "../../api/user-api";
+import UserList from "../../components/userList/UserList";
+import UserStats from "../../components/userStats/UserStats";
+import "./admin.css";
 function Admin() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<UserStatisticsDto[] | null>(
+    null
+  );
+
+  useEffect(() => {
+    console.log(selectedUser);
+  }, [selectedUser]);
+
+  /*const [isOpen, setIsOpen] = useState(false);
   const [categoryName, setCategoryName] = useState("");
 
   const handleisOpen = () => setIsOpen(true);
@@ -32,38 +42,18 @@ function Admin() {
       console.error(err);
       alert("Failed to create category");
     }
-  };
+  };*/
 
   return (
-    <>
-      <Typography variant="h4" sx={{ mb: 4 }}>
-        Admin Dashboard
-      </Typography>
+    <div className="admin-wrapper">
+      <div className="users-panel">
+        <UserList setSelectedUser={setSelectedUser} />
+      </div>
 
-      <Button variant="contained" onClick={handleisOpen}>
-        Create Category
-      </Button>
-
-      <Dialog open={isOpen} onClose={handleClose}>
-        <DialogTitle>Create New Category</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Category Name"
-            fullWidth
-            value={categoryName}
-            onChange={(e) => setCategoryName(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleCreate} variant="contained">
-            Create
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+      <div className="stats-panel">
+        {selectedUser ? <UserStats selectedUser={selectedUser} /> : null}
+      </div>
+    </div>
   );
 }
 
