@@ -31,3 +31,13 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const getAuthHeaders = () => {
+    const accessToken = sessionStorage.getItem("accessToken");
+    if (!accessToken) {
+        throw new Error("Access token not found in session storage.");
+    }
+    return {
+        headers: { Authorization: `Bearer ${accessToken}` }
+    };
+};

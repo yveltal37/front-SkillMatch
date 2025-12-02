@@ -1,11 +1,11 @@
-import { api } from "./api-axios";
+import { api, getAuthHeaders } from "./api-axios";
 
 const servicePrefix = "/user";
 
 export interface UserDto {
   id: number;
   username: string;
-  isAdmin: boolean
+  isAdmin: boolean;
 }
 
 export interface UserStatisticsDto {
@@ -14,22 +14,14 @@ export interface UserStatisticsDto {
 }
 
 export const getAllUsers = async () => {
-  const accessToken = sessionStorage.getItem("accessToken");
-  return (
-    await api.get<UserDto[]>(`${servicePrefix}`, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    })
-  ).data;
+  return (await api.get<UserDto[]>(`${servicePrefix}`, getAuthHeaders())).data;
 };
 
 export const getUserStatistics = async (username: string) => {
-  const accessToken = sessionStorage.getItem("accessToken");
   return (
     await api.get<UserStatisticsDto[]>(
       `${servicePrefix}/statistics/${username}`,
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
+      getAuthHeaders()
     )
   ).data;
 };
