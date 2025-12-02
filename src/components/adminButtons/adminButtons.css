@@ -1,0 +1,29 @@
+.admin-actions button {
+  background-color: #222 !important;
+  border-radius: 0 10px 10px 0  !important;
+  outline: none; 
+}
+.admin-actions button:hover{
+  background-color: #333 !important;
+}
+.admin-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 4px;
+  flex-direction: column;
+}
+
+.MuiDialogTitle-root {
+    font-size: 1.5rem !important;
+}
+
+.MuiPaper-root.MuiDialog-paper {
+    background-color: #333 ;
+    color: #ffffff; 
+    border-radius: 12px;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); 
+    cursor: pointer;
+}

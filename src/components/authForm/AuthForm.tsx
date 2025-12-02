@@ -12,7 +12,6 @@ function AuthForm({ isLogin }: { isLogin: boolean }) {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const [isNexted, setIsNexted] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
 
@@ -77,6 +76,9 @@ function AuthForm({ isLogin }: { isLogin: boolean }) {
     } else {
       await handleSignup();
     }
+    setPassword("");
+    setUsername("");
+    setSelectedCategories([]);
   };
 
   return (

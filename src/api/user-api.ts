@@ -5,6 +5,7 @@ const servicePrefix = "/user";
 export interface UserDto {
   id: number;
   username: string;
+  isAdmin: boolean
 }
 
 export interface UserStatisticsDto {

@@ -15,12 +15,14 @@ function UserStats({
   selectedUser: UserStatisticsDto[] | null;
 }) {
   if (!selectedUser) return null;
+
   const totalCompletedChallenges = selectedUser.reduce(
     (accumulator, currentStat) => {
       return accumulator + currentStat.completedChallenges;
     },
     0
   );
+
   return (
     <div className="user-stats">
       <h3>user completed {totalCompletedChallenges} challenges</h3>

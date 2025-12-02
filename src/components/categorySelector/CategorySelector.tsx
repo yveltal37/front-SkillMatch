@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCategories } from "../../api/auth-api";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import CategoryCard from "../catagoryCard/CategoryCard";
 import "./categorySelector.css";
 
@@ -40,11 +40,10 @@ function CategorySelector({ selected, setSelected }: CategorySelectorProps) {
 
   return (
     <div>
-      <Typography variant="h6" sx={{ mb: 2 }}>
+      <p>
         Choose 3 to 5 favorite categories
-      </Typography>
-      <div className="grid-container">
-        <Grid container spacing={1}>
+      </p>
+        <Grid container spacing={1} className="grid-container">
           {categories.map((cat) => (
             <Grid key={cat.id} sx={{ width: { xs: "100%", sm: "47%" } }}>
               <CategoryCard
@@ -55,7 +54,6 @@ function CategorySelector({ selected, setSelected }: CategorySelectorProps) {
             </Grid>
           ))}
         </Grid>
-      </div>
       <p> Selected: {selected.length} / 5 </p>
     </div>
   );

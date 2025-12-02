@@ -1,9 +1,15 @@
 .user-stats {
   width: 100%;
-  height: 50%;
+  height: 55%;
   background: #151515;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-right: 2rem;
+}
+
+@media (max-width: 900px) {
+  .user-stats{
+    height: 70%;
+  }
 }
