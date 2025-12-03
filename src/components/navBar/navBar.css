@@ -18,8 +18,9 @@
 
 .links {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   align-items: center;
+  margin-right: 5% !important;
 }
 
 .link {
@@ -55,9 +56,13 @@
   font-weight: bolder !important;
 }
 
-@media (min-width: 600px) {
+@media (max-width: 600px) {
   .links {
-    margin-right: 5% !important;
-    gap: 2rem;
+    gap: 1.5rem;
+    margin-right: 0 !important;
+  }
+  .link,
+  .logoutButton {
+    font-size: 1rem !important;
   }
 }

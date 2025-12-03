@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
@@ -16,14 +16,14 @@ function Navbar() {
     navigate("/auth");
   };
   
-  if (loading) return (<h1 className="navbar">loading...</h1>);
+  if (loading) return (<CircularProgress />);
 
   if(!user) return null;
 
   return (
     <nav className="navbar">
       <div className="greeting">
-        Hello, <strong>{user.username}</strong>!
+        Hello, <strong>{user.username}</strong>
       </div>
 
       <div className="links">
