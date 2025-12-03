@@ -11,7 +11,7 @@ import CategorySelector from "../../components/categorySelector/CategorySelector
 import { createChallenge } from "../../api/challenge-api";
 import { toast } from "react-toastify";
 import "./adminButtons.css";
-import type { ChallengeDto } from "../../api/challenge-api";
+import type { CreateChallengeDto } from "../../api/challenge-api";
 import AdminDialogAction from "../adminDialogAction/AdminDialogAction";
 
 interface DialogState {
@@ -27,7 +27,7 @@ function AdminButtons() {
     step: 1,
   });
   const [categoryName, setCategoryName] = useState("");
-  const [challengeData, setChallengeData] = useState<ChallengeDto>({
+  const [challengeData, setChallengeData] = useState<CreateChallengeDto>({
     name: "",
     description: "",
     expirationDate: "",

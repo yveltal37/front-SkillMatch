@@ -2,14 +2,19 @@ import { api, getAuthHeaders } from "./api-axios";
 
 const servicePrefix = '/challenge';
 
-export interface ChallengeDto {
+export interface CreateChallengeDto {
     name: string;
     description: string;
     expirationDate: string;
     categoryIds: number[];
 }
+export interface ChallengeDto extends CreateChallengeDto{
+  categories: string[];
+  id: number;
+  isComplete: boolean;
+}
 
-export const createChallenge = async (dto: ChallengeDto) => {
+export const createChallenge = async (dto: CreateChallengeDto) => {
     return api.post(
         servicePrefix, 
         dto,

@@ -2,8 +2,8 @@ import { useState } from "react";
 import type { UserStatisticsDto } from "../../api/user-api";
 import UserList from "../../components/userList/UserList";
 import UserStats from "../../components/userStats/UserStats";
-import "./admin.css";
 import AdminButtons from "../../components/adminButtons/AdminButtons";
+import "./admin.css";
 
 function Admin() {
   const [selectedUser, setSelectedUser] = useState<UserStatisticsDto[] | null>(

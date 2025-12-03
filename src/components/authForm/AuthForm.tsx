@@ -27,6 +27,8 @@ function AuthForm({ isLogin }: { isLogin: boolean }) {
       if (res.user.isAdmin) {
         navigate("/admin");
       }
+      else
+        navigate("/challenges");
     } catch (err: any) {
       const message =
         err?.response?.data?.message || "An unknown error occurred.";
@@ -58,6 +60,7 @@ function AuthForm({ isLogin }: { isLogin: boolean }) {
       sessionStorage.setItem("accessToken", res.tokens.accessToken);
       sessionStorage.setItem("refreshToken", res.tokens.refreshToken);
       setUser(res.user);
+      navigate("/challenges");
     } catch (err: any) {
       setIsNexted(false);
 
@@ -76,9 +79,6 @@ function AuthForm({ isLogin }: { isLogin: boolean }) {
     } else {
       await handleSignup();
     }
-    setPassword("");
-    setUsername("");
-    setSelectedCategories([]);
   };
 
   return (
