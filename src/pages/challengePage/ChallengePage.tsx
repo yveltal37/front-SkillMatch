@@ -9,12 +9,24 @@ import { CircularProgress, Grid } from "@mui/material";
 import { toast } from "react-toastify";
 import ChallengeCard from "../../components/challengeCard/ChallengeCard";
 import { UserContext } from "../../context/UserContext";
+import { useRealtimeChallenges } from "../../hooks/useRealtimeChallenges";
 import "./challengePage.css";
 
 function ChallengePage() {
   const [challenges, setChallenges] = useState<ChallengeDto[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
+  const { realtimeChallenges, setrealtimeChallenges } = useRealtimeChallenges();
+
+  useEffect(() => {
+    if (realtimeChallenges.length === 0) return;
+
+    setChallenges((prev) => {
+      return [...prev, ...realtimeChallenges];
+    });
+
+    setrealtimeChallenges([]);
+  }, [realtimeChallenges]);
 
   useEffect(() => {
     const fetchChallenges = async () => {
@@ -51,7 +63,8 @@ function ChallengePage() {
   }
 
   const handleAdminClick = async (id: number) => {
-    if (!window.confirm(`Are you sure you want to delete this challenge?`)) return;
+    if (!window.confirm(`Are you sure you want to delete this challenge?`))
+      return;
     try {
       await deleteChallenge(id);
       removeChallengeFromUI(id);
@@ -70,7 +83,7 @@ function ChallengePage() {
     try {
       console.log(id);
       await toggleChallenge(id);
-      toast.info("status changed")
+      toast.info("status changed");
     } catch (err: any) {
       const message =
         err?.response?.data?.message || "An unknown error occurred.";
