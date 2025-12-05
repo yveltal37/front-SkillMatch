@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
-import type { FC } from "react";
+import "./expiration.css";
 
-interface ExpirationTimerProps {
-  expirationDate: string;
-}
-
-const ExpirationTimer: FC<ExpirationTimerProps> = ({ expirationDate }) => {
+function ExpirationTimer({ expirationDate }: { expirationDate: string }) {
   const calculateTimeLeft = () => {
     const diff = new Date(expirationDate).getTime() - new Date().getTime();
 
@@ -32,11 +28,11 @@ const ExpirationTimer: FC<ExpirationTimerProps> = ({ expirationDate }) => {
   }, [expirationDate]);
 
   return (
-    <div style={{ fontWeight: "bold", direction: "rtl" }}>
-      {timeLeft.days} : {timeLeft.hours} : {timeLeft.minutes} :{" "}
-      {timeLeft.seconds} 
+    <div className="timer">
+      {timeLeft.days} : {timeLeft.hours}  : {timeLeft.minutes}:{" "}
+      {timeLeft.seconds}
     </div>
   );
-};
+}
 
 export default ExpirationTimer;

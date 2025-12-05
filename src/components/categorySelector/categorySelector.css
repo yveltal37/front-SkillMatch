@@ -1,6 +1,9 @@
 .grid-container{
+    margin-top: 5px;
     max-height: 300px;
     overflow-y: auto;
+    display: flex;
+    gap: 0.5rem !important;
 }
 
 p{

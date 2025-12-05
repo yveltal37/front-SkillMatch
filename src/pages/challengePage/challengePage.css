@@ -1,0 +1,13 @@
+.challenge-page-wrapper {
+  margin-top: 5rem;
+  width: 100%;
+  height: calc(100% - 5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.challenge-scroll-area {
+  width: 100%;
+  overflow-y: auto;
+}

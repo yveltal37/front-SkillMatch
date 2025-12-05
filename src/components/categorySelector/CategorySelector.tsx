@@ -43,7 +43,7 @@ function CategorySelector({ selected, setSelected }: CategorySelectorProps) {
       <p>
         Choose 3 to 5 favorite categories
       </p>
-        <Grid container spacing={1} className="grid-container">
+        <Grid container className="grid-container">
           {categories.map((cat) => (
             <Grid key={cat.id} sx={{ width: { xs: "100%", sm: "47%" } }}>
               <CategoryCard

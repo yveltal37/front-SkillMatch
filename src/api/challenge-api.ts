@@ -18,8 +18,8 @@ export const createChallenge = async (dto: CreateChallengeDto) => {
   return api.post(servicePrefix, dto, getAuthHeaders());
 };
 
-export const deleteChallenge = async (name: string) => {
-  return api.delete(`${servicePrefix}/delete/${name}`, getAuthHeaders());
+export const deleteChallenge = async (id: number) => {
+  return api.delete(`${servicePrefix}/delete/${id}`, getAuthHeaders());
 };
 
 export const getUserChallenges = async () => {
@@ -29,9 +29,9 @@ export const getUserChallenges = async () => {
   );
 };
 
-export const toggleChallenge = async (challengeName: string) => {
+export const toggleChallenge = async (challengeid: number) => {
   return api.post(
-    `${servicePrefix}/toggle/${challengeName}`,
+    `${servicePrefix}/toggle/${challengeid}`,
     {},
     getAuthHeaders()
   );
